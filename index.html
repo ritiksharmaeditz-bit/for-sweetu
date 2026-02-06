@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Be My Valentine 💖</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #2b0a3d, #0d0216);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .card {
+      max-width: 420px;
+      width: 100%;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(14px);
+      border-radius: 28px;
+      padding: 28px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(255, 0, 120, 0.35);
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 { color: #ff9ecf; margin-bottom: 10px; }
+    h2 { color: #ffb3d9; }
+    p { color: #f2d6e9; }
+
+    .name {
+      font-size: 42px;
+      font-weight: 700;
+      background: linear-gradient(90deg, #ff5fa2, #ffc1dd, #ff5fa2);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shine 3s linear infinite, heartbeat 1.4s infinite;
+    }
+
+    @keyframes shine {
+      to { background-position: 200% center; }
+    }
+
+    @keyframes heartbeat {
+      0% { transform: scale(1); }
+      20% { transform: scale(1.1); }
+      40% { transform: scale(1); }
+      60% { transform: scale(1.15); }
+      80% { transform: scale(1); }
+      100% { transform: scale(1); }
+    }
+
+    button {
+      border: none;
+      border-radius: 14px;
+      padding: 12px 22px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .yes { background: #ff4f9a; color: white; }
+    .no { background: transparent; border: 2px solid white; color: white; position: relative; }
+
+    .music-btn {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      color: white;
+      padding: 10px 16px;
+      border-radius: 20px;
+      z-index: 10;
+    }
+
+    .petal {
+      position: fixed;
+      top: -10px;
+      font-size: 20px;
+      animation: fall linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(110vh) rotate(360deg); }
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 1; }
+      100% { transform: scale(3); opacity: 0; }
+    }
+
+    .swiper {
+      width: 100%;
+      height: 220px;
+      margin-top: 16px;
+      border-radius: 18px;
+    }
+
+    .swiper-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 18px;
+    }
+
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- LOCK SCREEN -->
+  <div class="container" id="lockScreen">
+    <div class="card">
+      <h1>💌 Private Valentine</h1>
+      <p>Only <span class="name">Shawtyy</span> can open this 💖</p>
+      <button class="yes" onclick="unlock()">Unlock 💕</button>
+    </div>
+  </div>
+
+  <div class="container hidden" id="mainContent">
+    <div class="card" id="question">
+      <h1>Hey my</h1>
+      <div class="name">Shawtyy 💖</div>
+
+      <p>Every version of life feels softer when you’re in it.<br>— Ritik</p>
+      <h2>Will you be my Valentine? 🌹</h2>
+
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="IMG_2711.JPG"></div>
+          <div class="swiper-slide"><img src="IMG_7447.JPG"></div>
+          <div class="swiper-slide"><img src="IMG_9043.JPG"></div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px; display:flex; justify-content:center; gap:14px;">
+        <button class="yes" onclick="sayYes()">Yes 💖</button>
+        <button class="no" id="noBtn" onmouseover="moveNo()">No 🙈</button>
+      </div>
+    </div>
+
+    <div class="card hidden" id="yesScreen">
+      <h1>You said YES 💘</h1>
+      <div class="name">Shawtyy</div>
+      <p>Loving you is my favorite thing in this world.<br>Today, tomorrow, always — it’s you.</p>
+      <img src="ac38ac69-064d-47fe-a281-405481f674c9.jpg" style="width:100%; border-radius:20px; margin-top:14px;">
+      <p style="margin-top:10px;">Happy Valentine’s Day 🌙💗</p>
+      <button class="yes" style="margin-top:16px;" onclick="showFinal()">One last thing 💌</button>
+    </div>
+
+    <div class="card hidden" id="finalScreen">
+      <h1 style="font-size:36px;">💖</h1>
+      <div class="name" style="font-size:48px;">I love you Shawtyy</div>
+      <p style="margin-top:14px;">Forever & always,<br>— Ritik</p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <script>
+    function moveNo() {
+      const btn = document.getElementById('noBtn');
+      btn.style.transform = `translate(${Math.random()*120-60}px, ${Math.random()*120-60}px)`;
+    }
+
+    function sayYes() {
+      if (navigator.vibrate) navigator.vibrate([200,100,200,100,300]);
+      launchFireworks();
+      document.getElementById('question').classList.add('hidden');
+      document.getElementById('yesScreen').classList.remove('hidden');
+    }
+
+    function unlock() {
+      document.getElementById('lockScreen').classList.add('hidden');
+      document.getElementById('mainContent').classList.remove('hidden');
+    }
+
+    function launchFireworks() {
+      for (let i = 0; i < 25; i++) {
+        const fw = document.createElement('div');
+        fw.innerText = '🎆';
+        fw.style.position = 'fixed';
+        fw.style.left = Math.random() * window.innerWidth + 'px';
+        fw.style.top = Math.random() * window.innerHeight + 'px';
+        fw.style.fontSize = '24px';
+        fw.style.animation = 'pop 1.5s ease-out forwards';
+        document.body.appendChild(fw);
+        setTimeout(() => fw.remove(), 1500);
+      }
+    }
+
+    function showFinal() {
+      document.getElementById('yesScreen').classList.add('hidden');
+      document.getElementById('finalScreen').classList.remove('hidden');
+    }
+
+    new Swiper('.swiper', { loop: true });
+
+    setInterval(() => {
+      const petal = document.createElement('div');
+      petal.className = 'petal';
+      petal.innerText = '🌹';
+      petal.style.left = Math.random() * window.innerWidth + 'px';
+      petal.style.animationDuration = 5 + Math.random() * 5 + 's';
+      document.body.appendChild(petal);
+      setTimeout(() => petal.remove(), 10000);
+    }, 400);
+  </script>
+
+</body>
+</html>
